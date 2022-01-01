@@ -1,0 +1,15 @@
+import pygame
+
+
+class Board:
+    def __init__(self, width, height, cell_size, color_pole, color_mine, color_number):
+        self.width = width
+        self.height = height
+        self.board = [[0] * width for _ in range(height)]
+        self.visible = [[1] * width for _ in range(height)]
+        self.left = 10
+        self.top = 10
+        self.cell_size = cell_size
+        self.color_pole = color_pole
+        self.color_mine = color_mine
+        self.color_number = color_number
