@@ -4,7 +4,7 @@ import drawings
 
 
 def main():
-    game = Minesweaper(900, 700, 35)
+    game = Minesweaper(900, 700, 35, 150)
     running = True
     while running:
         for event in pygame.event.get():

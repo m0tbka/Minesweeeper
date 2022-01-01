@@ -7,7 +7,7 @@ from random import randrange as randint
 class Minesweaper:
     def __init__(self, width, height, cell_size, amount_mines=10):
         self.screen = pygame.display.set_mode((width, height))
-        self.board = Board((width - 20) // cell_size, (height - 20) // cell_size, cell_size, "white", "red", "grey")
+        self.board = Board((width - 20) // cell_size, (height - 20) // cell_size, cell_size, "white", "red")
         self.amount_mines = amount_mines
         drawings.draw_board(self.board, self.screen)
         self.set_mines(self.amount_mines)

@@ -2,7 +2,10 @@ import pygame
 
 
 class Board:
-    def __init__(self, width, height, cell_size, color_pole, color_mine, color_number):
+
+    COLOURS = [(100, 100, 100), "blue", "green", "red", (100, 100, 180), (180, 100, 100)]
+
+    def __init__(self, width, height, cell_size, color_pole, color_mine):
         self.width = width
         self.height = height
         self.board = [[0] * width for _ in range(height)]
@@ -13,7 +16,6 @@ class Board:
         self.cell_size = cell_size
         self.color_pole = color_pole
         self.color_mine = color_mine
-        self.color_number = color_number
 
     """Возвращает индексы клетки по заданным координатам с поля"""
     def get_cell(self, coordinates):
