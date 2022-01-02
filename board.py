@@ -3,7 +3,7 @@ import pygame
 
 class Board:
 
-    COLOURS = [(100, 100, 100), "blue", "green", "red", (100, 100, 180), (180, 100, 100)]
+    COLOURS = [(100, 100, 100), "blue", "green", "red", (100, 100, 180), (180, 100, 100), (100, 180, 100)]
 
     def __init__(self, width, height, cell_size, color_pole, color_mine):
         self.width = width

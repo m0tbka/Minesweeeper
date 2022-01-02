@@ -53,9 +53,9 @@ def draw_rim_number(board: Board, surface: pygame.Surface, number, x, y, cell_si
         pygame.draw.lines(surface, board.COLOURS[number], False, [(x + cell_size // 3, y + cell_size // 10), (
             x + cell_size // 2, y + cell_size - cell_size // 10),
                                                                      (x + cell_size // 3 * 2, y + cell_size // 10)], 2)
-    # if number == 6:
-    #     pygame.draw.line(surface, board.COLOURS[number], (x + cell_size // 4 * 3, y + cell_size // 10),
-    #                      (x + cell_size // 4 * 2, y + cell_size - cell_size // 10), 2)
-    #     pygame.draw.lines(surface, board.COLOURS[number], False, [(x + cell_size // 4, y + cell_size // 10), (
-    #         x + cell_size // 4 + cell_size // 8, y + cell_size - cell_size // 10),
-    #                                                                  (x + cell_size // 4 * 2, y + cell_size // 10)], 2)
+    if number == 6:
+        pygame.draw.line(surface, board.COLOURS[number], (x + cell_size // 4 * 3, y + cell_size // 10),
+                         (x + cell_size // 4 * 3, y + cell_size - cell_size // 10), 2)
+        pygame.draw.lines(surface, board.COLOURS[number], False, [(x + cell_size // 4, y + cell_size // 10), (
+            x + cell_size // 4 + cell_size // 8, y + cell_size - cell_size // 10),
+                                                                     (x + cell_size // 4 * 2, y + cell_size // 10)], 2)
