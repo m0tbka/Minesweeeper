@@ -1,11 +1,11 @@
 import pygame
-from minesweaper import Minesweaper
+from minesweeper import Minesweeper
 import drawings
 
 
 def main():
     # Minesweaper(кол-во клеток по горизонтали, кол-во клеток по вертикали, кол-во мин, размер одной клетки)
-    game = Minesweaper(20, 20, 70, 35)
+    game = Minesweeper(20, 20, 70, 35)
     running = True
     while running:
         for event in pygame.event.get():

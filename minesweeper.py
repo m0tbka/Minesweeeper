@@ -4,7 +4,7 @@ import drawings
 from random import randrange as randint
 
 
-class Minesweaper:
+class Minesweeper:
     def __init__(self, width, height, amount_mines=10, cell_size=35):
         self.width = width * cell_size + cell_size * 2
         self.height = height * cell_size + cell_size * 2
