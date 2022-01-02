@@ -3,6 +3,9 @@ from board import Board
 
 
 def draw_board(board: Board, surface: pygame.Surface):
+    pygame.draw.rect(surface, (0, 0, 0), (
+        0, 0, board.height * board.cell_size + board.left,
+        board.width * board.cell_size + board.top))
     for i in range(board.height):
         for j in range(board.width):
             pygame.draw.rect(surface, board.color_pole, (

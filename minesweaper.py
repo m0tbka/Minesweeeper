@@ -16,6 +16,7 @@ class Minesweaper:
 
     def clear(self):
         self.board = Board(self.board.width, self.board.height, self.board.cell_size, "white", "red", "purple")
+        drawings.draw_board(self.board, self.screen)
 
     def set_mines(self, amount):
         self.amount_mines = amount
@@ -45,8 +46,10 @@ class Minesweaper:
         if event.button == 1:
             if self.board.visible[indexes[0]][indexes[1]] == 0:
                 if self.board.board[indexes[0]][indexes[1]] == -1:
-                    self.board.visible[indexes[0]][indexes[1]] = 1
-                    self.board.need_update[indexes[0]][indexes[1]] = 1
+                    self.clear()
+                    self.set_mines(self.amount_mines)
+                    # self.board.visible[indexes[0]][indexes[1]] = 1
+                    # self.board.need_update[indexes[0]][indexes[1]] = 1
                 else:
                     self.dfs(indexes[0], indexes[1])
         if event.button == 3:
