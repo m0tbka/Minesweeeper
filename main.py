@@ -4,7 +4,8 @@ import drawings
 
 
 def main():
-    game = Minesweaper(900, 700, 35, 150)
+    # Minesweaper(кол-во клеток по горизонтали, кол-во клеток по вертикали, кол-во мин, размер одной клетки)
+    game = Minesweaper(20, 20, 70, 35)
     running = True
     while running:
         for event in pygame.event.get():
