@@ -1,4 +1,7 @@
 import pygame
+from time import time
+
+import board
 from board import Board
 import drawings
 from random import randrange as randint
@@ -6,15 +9,49 @@ from random import randrange as randint
 
 class Minesweeper:
     def __init__(self, width, height, amount_mines=10, cell_size=35):
-        self.width = width * cell_size + cell_size * 2
-        self.height = height * cell_size + cell_size * 2
+        self.condition = 0
+        self.width = width * cell_size + 20
+        self.height = height * cell_size + 20
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.board = Board(width, height, cell_size, "white", "red", "purple")
         self.amount_mines = amount_mines
         drawings.draw_board(self.board, self.screen)
         self.set_mines(self.amount_mines)
+        self.beginning_time = time()
+        self.ending_time = time()
+
+    def begin_new_game(self):
+        self.clear()
+        self.set_mines(self.amount_mines)
+        self.beginning_time = time()
+
+    def am_i_winning(self):
+        if self.condition != 0:
+            return
+        flag = 0
+        correct_flag = 0
+        for i in range(self.board.height):
+            for j in range(self.board.width):
+                if self.board.visible[i][j] == -2:
+                    if self.board.board[i][j] == -1:
+                        correct_flag += 1
+                    else:
+                        flag += 1
+                    # print(i, j)
+        if correct_flag == self.amount_mines and flag == 0:
+            self.condition = 1
+            self.show()
+            self.board = drawings.update_board(self.board, self.screen)
+        # print(flag)
+        self.ending_time = time()
+
+    def defeat(self):
+        self.condition = -1
+        self.show(0)
+        self.board = drawings.update_board(self.board, self.screen)
 
     def clear(self):
+        self.condition = 0
         self.board = Board(self.board.width, self.board.height, self.board.cell_size, "white", "red", "purple")
         drawings.draw_board(self.board, self.screen)
 
@@ -25,6 +62,12 @@ class Minesweeper:
             self.board.board[i][j] = -1
             # self.board.visible[i][j] = 1
             self.board.need_update[i][j] = 1
+        self.amount_mines = 0
+        for i in range(self.board.height):
+            for j in range(self.board.width):
+                if self.board.board[i][j] == -1:
+                    self.amount_mines += 1
+        print(f"Actual amount of mines: {self.amount_mines}")
         self.set_numbers()
 
     def set_numbers(self):
@@ -46,8 +89,7 @@ class Minesweeper:
         if event.button == 1:
             if self.board.visible[indexes[0]][indexes[1]] == 0:
                 if self.board.board[indexes[0]][indexes[1]] == -1:
-                    self.clear()
-                    self.set_mines(self.amount_mines)
+                    self.defeat()
                     # self.board.visible[indexes[0]][indexes[1]] = 1
                     # self.board.need_update[indexes[0]][indexes[1]] = 1
                 else:
@@ -72,3 +114,25 @@ class Minesweeper:
             for jq in range(-1, 2):
                 if 0 <= i + iq < self.board.height and 0 <= j + jq < self.board.width:
                     self.dfs(i + iq, j + jq)
+
+    def show(self, what_to_show=1):
+        for i in range(self.board.height):
+            for j in range(self.board.width):
+                if (what_to_show and self.board.visible[i][j] != -2) or not what_to_show:
+                    self.board.visible[i][j] = 1
+                    self.board.need_update[i][j] = 1
+
+    def drawer(self):
+        self.am_i_winning()
+        if self.condition != 0:
+            if self.condition == -1:
+                text = "BOOM"
+                font = self.board.width * self.board.cell_size // 4
+                k = 10 / 3
+            else:
+                text = f"Defused in {min(int(self.ending_time - self.beginning_time), 999)} s"
+                font = self.board.width * self.board.cell_size // 8
+                k = 5
+            drawings.draw_boom(self.screen, self.board, text, font, k)
+        else:
+            self.board = drawings.update_board(self.board, self.screen)

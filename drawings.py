@@ -2,6 +2,15 @@ import pygame
 from board import Board
 
 
+def draw_boom(surface: pygame.Surface, board: Board, word="BOOM", length_text=60, k=5):
+    font_end = pygame.font.SysFont('Arial', length_text, bold=True)
+    font_end1 = pygame.font.SysFont('Arial', length_text, bold=True)
+    render_end = font_end1.render(word, True, pygame.Color('black'))
+    surface.blit(render_end, (13 + board.width * board.cell_size // 2 - int(length_text * len(word) // k), 13 + board.height * board.cell_size // 2 - length_text // 2))
+    render_end = font_end.render(word, True, pygame.Color('pink'))
+    surface.blit(render_end, (10 + board.width * board.cell_size // 2 - int(length_text * len(word) // k), 10 + board.height * board.cell_size // 2 - length_text // 2))
+
+
 def draw_board(board: Board, surface: pygame.Surface):
     pygame.draw.rect(surface, (0, 0, 0), (
         0, 0, board.height * board.cell_size + board.left,
@@ -22,22 +31,31 @@ def update_board(board: Board, surface: pygame.Surface):
                         board.left + j * board.cell_size + board.cell_size // 4,
                         board.top + i * board.cell_size + board.cell_size // 10), (
                                          board.left + j * board.cell_size + board.cell_size // 4,
-                                         board.top + i * board.cell_size + board.cell_size - board.cell_size // 10))
-                    # pygame.draw.polygon(surface, board.color_flag, [()])
+                                         board.top + i * board.cell_size + board.cell_size - board.cell_size // 10), 3)
+                    pygame.draw.polygon(surface, board.color_flag, [(
+                        board.left + j * board.cell_size + board.cell_size // 4,
+                        board.top + i * board.cell_size + board.cell_size // 10), (
+                                         board.left + j * board.cell_size + board.cell_size - board.cell_size // 5,
+                                         board.top + i * board.cell_size + (board.cell_size - board.cell_size // 10) // 4), (
+                                         board.left + j * board.cell_size + board.cell_size // 4,
+                                         board.top + i * board.cell_size + (board.cell_size - board.cell_size // 10) // 2), ])
                 if board.visible[i][j] == 1:
+                    pygame.draw.rect(surface, (0, 0, 0), (
+                        board.left + j * board.cell_size + 2, board.top + i * board.cell_size + 2, board.cell_size - 4,
+                        board.cell_size - 4))
                     if board.board[i][j] == -1:
                         pygame.draw.rect(surface, board.color_mine, (
-                            board.left + j * board.cell_size + 1, board.top + i * board.cell_size + 1, board.cell_size - 1,
-                            board.cell_size - 1))
+                            board.left + j * board.cell_size + 2, board.top + i * board.cell_size + 2, board.cell_size - 4,
+                            board.cell_size - 4))
                     if board.board[i][j] == 0:
                         pygame.draw.rect(surface, board.COLOURS[0], (
-                            board.left + j * board.cell_size + 1, board.top + i * board.cell_size + 1, board.cell_size - 1,
-                            board.cell_size - 1))
+                            board.left + j * board.cell_size + 2, board.top + i * board.cell_size + 2, board.cell_size - 4,
+                            board.cell_size - 4))
                     if board.board[i][j] > 0:
                         draw_rim_number(board, surface, board.board[i][j], board.left + j * board.cell_size,
                                         board.top + i * board.cell_size, board.cell_size)
                 if board.visible[i][j] == 0:
-                    print(i, j, 0)
+                    # print(i, j, 0)
                     pygame.draw.rect(surface, (0, 0, 0), (
                         board.left + j * board.cell_size + 2, board.top + i * board.cell_size + 2, board.cell_size - 4,
                         board.cell_size - 4))
