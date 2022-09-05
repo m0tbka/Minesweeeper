@@ -10,7 +10,7 @@ class Board:
         self.height = height
         self.board = [[0] * width for _ in range(height)]
         self.visible = [[0] * width for _ in range(height)]
-        self.need_update = [[0] * width for _ in range(height)]
+        self.need_update = [[1] * width for _ in range(height)]
         self.left = 10
         self.top = 10
         self.cell_size = cell_size
